@@ -1,4 +1,4 @@
-package com.twcrone.mygdxgame;
+package com.twcrone.mygdxgame.helloworld;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
