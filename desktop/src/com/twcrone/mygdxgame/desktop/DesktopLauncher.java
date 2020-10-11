@@ -9,6 +9,6 @@ public class DesktopLauncher {
 //		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 //		new LwjglApplication(new MyGdxGame(), config);
 		StarfishCollectorAlpha myProgram = new StarfishCollectorAlpha();
-		LwjglApplication launder = new LwjglApplication(myProgram);
+		LwjglApplication launder = new LwjglApplication(myProgram, "Starfish Collector", 800, 600);
 	}
 }
