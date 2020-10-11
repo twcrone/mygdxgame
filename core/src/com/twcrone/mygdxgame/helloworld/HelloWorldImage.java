@@ -9,22 +9,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class HelloWorldImage extends Game {
 
-    private Texture texture;
-    private SpriteBatch batch;
+  private Texture texture;
+  private SpriteBatch batch;
 
-    @Override
-    public void create() {
-        FileHandle worldFile = Gdx.files.internal("world.png");
-        texture = new Texture(worldFile);
-        batch = new SpriteBatch();
-    }
+  @Override
+  public void create() {
+    FileHandle worldFile = Gdx.files.internal("world.png");
+    texture = new Texture(worldFile);
+    batch = new SpriteBatch();
+  }
 
-    public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+  public void render() {
+    Gdx.gl.glClearColor(1, 1, 1, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
-        batch.draw(texture, 192, 112);
-        batch.end();
-    }
+    batch.begin();
+    batch.draw(texture, 192, 112);
+    batch.end();
+  }
 }
