@@ -46,7 +46,7 @@ public class StarfishCollectorAlpha extends Game {
             turtle.moveDown();
         }
 
-        if(turtle.checkCollision(starfish.getRectangle())) {
+        if(turtle.collidesWith(starfish)) {
             win = true;
         }
 

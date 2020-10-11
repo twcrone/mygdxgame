@@ -51,8 +51,8 @@ public class Thing {
         moveRectangle();
     }
 
-    public boolean checkCollision(Rectangle rectangle) {
-        return this.rectangle.overlaps(rectangle);
+    public boolean collidesWith(Thing thing) {
+        return this.rectangle.overlaps(thing.getRectangle());
     }
 
     private void moveRectangle() {
