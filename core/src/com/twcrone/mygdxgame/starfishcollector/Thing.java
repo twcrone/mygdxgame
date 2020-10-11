@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 public class Thing {
     private float x;
     private float y;
-    private Rectangle rectangle;
-    private Texture texture;
+    private final Rectangle rectangle;
+    private final Texture texture;
 
     public Thing(float x, float y, String assetPath) {
         this.x = x;
