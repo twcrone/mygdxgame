@@ -1,42 +1,22 @@
 package com.twcrone.mygdxgame.starfishcollector;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-
 public class StarfishCollectorBeta extends GameBeta {
 
   private Turtle turtle;
 
-  private ActorBeta starfish;
-  private ActorBeta winMessage;
+  private Starfish starfish;
+  private BaseActor ocean;
 
   @Override
   public void initialize() {
-    ActorBeta ocean = new ActorBeta();
-    ocean.setTexture(new Texture(Gdx.files.internal("water.jpg")));
-    mainStage.addActor(ocean);
+    ocean = new BaseActor(0, 0, mainStage);
+    ocean.loadTexture("water.jpg");
+    ocean.setSize(800, 600);
 
-    starfish = new ActorBeta();
-    starfish.setTexture(new Texture(Gdx.files.internal("starfish.png")));
-    starfish.setPosition(380, 380);
-    mainStage.addActor(starfish);
+    starfish = new Starfish(380, 380, mainStage);
 
-    turtle = new Turtle();
-    turtle.setTexture(new Texture(Gdx.files.internal("turtle-1.png")));
-    turtle.setPosition(20, 20);
-    mainStage.addActor(turtle);
-
-    winMessage = new ActorBeta();
-    winMessage.setTexture(new Texture(Gdx.files.internal("you-win.png")));
-    winMessage.setPosition(180, 180);
-    winMessage.setVisible(false);
-    mainStage.addActor(winMessage);
+    turtle = new Turtle(20, 20, mainStage);
   }
 
-  public void update(float dt) {
-    if (turtle.overlaps(starfish)) {
-      starfish.remove();
-      winMessage.setVisible(true);
-    }
-  }
+  public void update(float dt) {}
 }
