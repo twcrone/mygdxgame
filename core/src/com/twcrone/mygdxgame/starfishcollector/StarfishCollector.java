@@ -2,11 +2,12 @@ package com.twcrone.mygdxgame.starfishcollector;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-public class StarfishCollectorBeta extends GameBeta {
+public class StarfishCollector extends GameBeta {
 
   private Turtle turtle;
 
   private Starfish starfish;
+  private Rock rock;
   private BaseActor ocean;
 
   @Override
@@ -18,9 +19,12 @@ public class StarfishCollectorBeta extends GameBeta {
     starfish = new Starfish(380, 380, mainStage);
 
     turtle = new Turtle(20, 20, mainStage);
+    rock = new Rock(200, 200, mainStage);
   }
 
   public void update(float dt) {
+    turtle.preventOverlap(rock);
+
     if(turtle.overlaps(starfish) && !starfish.isCollected()) {
       starfish.collect();
 

@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Intersector.MinimumTranslationVector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.compression.lzma.Base;
 
 public class BaseActor extends Actor {
 
@@ -72,6 +72,25 @@ public class BaseActor extends Actor {
     boundaryPolygon.setRotation(getRotation());
     boundaryPolygon.setScale(getScaleX(), getScaleY());
     return boundaryPolygon;
+  }
+
+  public Vector2 preventOverlap(BaseActor other) {
+    Polygon a = this.getBoundaryPolygon();
+    Polygon b = other.getBoundaryPolygon();
+
+    if (!a.getBoundingRectangle().overlaps(b.getBoundingRectangle())) {
+      return null;
+    }
+
+    MinimumTranslationVector mtv = new MinimumTranslationVector();
+
+    boolean polygonOverlap = Intersector.overlapConvexPolygons(a, b, mtv);
+
+    if(!polygonOverlap) return null;
+
+    this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
+
+    return mtv.normal;
   }
 
   public boolean overlaps(BaseActor other) {
