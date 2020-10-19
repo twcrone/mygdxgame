@@ -4,22 +4,53 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StarfishCollector extends Game {
 
+  protected Stage mainStage;
+
   private Turtle turtle;
 
-  private Starfish starfish;
-  private Rock rock;
+  private final List<Rock> rocks = new ArrayList<>();
+  private final List<Starfish> starfish = new ArrayList<>();
+
   private BaseActor ocean;
 
-  protected Stage mainStage;
+  private boolean win = false;
 
   @Override
   public void create() {
     mainStage = new Stage();
     initialize();
+  }
+
+  public void initialize() {
+    ocean = new BaseActor(0, 0, mainStage);
+    ocean.loadTexture("water.jpg");
+    ocean.setSize(800, 600);
+
+    turtle = new Turtle(20, 20, mainStage);
+
+    addStarfish(400, 400);
+    addStarfish(500, 100);
+    addStarfish(100, 450);
+    addStarfish(200, 250);
+
+    addRock(200, 150);
+    addRock(100, 300);
+    addRock(300, 350);
+    addRock(450, 200);
+  }
+
+  private void addRock(float x, float y) {
+    rocks.add(new Rock(x, y, mainStage));
+  }
+
+  private void addStarfish(float x, float y) {
+    starfish.add(new Starfish(x, y, mainStage));
   }
 
   public void render() {
@@ -35,33 +66,30 @@ public class StarfishCollector extends Game {
     mainStage.draw();
   }
 
-  public void initialize() {
-    ocean = new BaseActor(0, 0, mainStage);
-    ocean.loadTexture("water.jpg");
-    ocean.setSize(800, 600);
+  public void update(float dt) {
+    for(Rock rock : rocks) {
+      turtle.preventOverlap(rock);
+    }
 
-    starfish = new Starfish(380, 380, mainStage);
+    for(Starfish s : starfish) {
+      if(turtle.overlaps(s) && !s.isCollected()) {
+        collect(s);
+      }
 
-    turtle = new Turtle(20, 20, mainStage);
-    rock = new Rock(200, 200, mainStage);
+
+//      BaseActor youWinMessage = new BaseActor(0,0, mainStage);
+//      youWinMessage.loadTexture("you-win.png");
+//      youWinMessage.centerAtPosition(400, 300);
+//      youWinMessage.setOpacity(0);
+//      youWinMessage.addAction(Actions.delay(1));
+//      youWinMessage.addAction(Actions.after(Actions.fadeIn(1)));
+    }
   }
 
-  public void update(float dt) {
-    turtle.preventOverlap(rock);
-
-    if(turtle.overlaps(starfish) && !starfish.isCollected()) {
-      starfish.collect();
-
-      Whirlpool whirlpool = new Whirlpool(0, 0, mainStage);
-      whirlpool.centerAtActor(starfish);
-      whirlpool.setOpacity(0.25f);
-
-      BaseActor youWinMessage = new BaseActor(0,0, mainStage);
-      youWinMessage.loadTexture("you-win.png");
-      youWinMessage.centerAtPosition(400, 300);
-      youWinMessage.setOpacity(0);
-      youWinMessage.addAction(Actions.delay(1));
-      youWinMessage.addAction(Actions.after(Actions.fadeIn(1)));
-    }
+  private void collect(Starfish s) {
+    s.collect();
+    Whirlpool whirlpool = new Whirlpool(0, 0, mainStage);
+    whirlpool.centerAtActor(s);
+    whirlpool.setOpacity(0.25f);
   }
 }
